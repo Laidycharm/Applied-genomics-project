@@ -1,6 +1,9 @@
 # Applied-genomics-project
+
 Name: Princess Sunday-Jimmy
+
 Program Title: Bioinformatics Analysis Track
+
 This repository contains an end-to-end analysis pipeline for RNA sequencing data using bash scripting and R
 
 Introduction to RNA-Seq
