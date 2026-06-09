@@ -1,0 +1,93 @@
+
+git config --global user.name "Princess Jimmy"                 # log in your github account
+
+git config --global user.email "princessjimmy84@gmail.com"     # log in your github via email
+
+git config --list                                              # confirm it is logged in
+
+ssh-keygen -t ed25519 -C "princessjimmy84@gmail.com"           # to generate a key for the project
+
+cat /home/princess/.ssh/id_ed25519.pub                          # to see the key
+
+ssh -T git@github.com                                          # Activate the key on git hub
+
+git clone git@github.com:Laidycharm/Applied-genomics-project   # Clone working directory to github
+
+ls                                                             # see list
+
+cd Applied-genomics-project                                    # change directory
+
+mkdir -p data                                                  # make folder
+ 
+cd..                                                           # leave current directory
+
+rm -r sample_info.tsv                                          # remove file/folder
+
+touch sample_info.tsv                                          # create a file not folder/directory
+
+rm -r scripts/*                                                # cheat code to delete files at once in a folder of interest
+
+git status                                                     # check if work done is updated on github
+
+git add .                                                      # Add changes
+
+git commit -m "create data folder and content"                 # commit changes with instructions
+
+git push origin main                                           # Save to the working location on github
+
+touch qc/raw_fastqc/.gitkeep                                   # adding .gitkeep to folders without files
+
+touch qc/trimmed_fastqc/.gitkeep
+
+touch reference/genome/.gitkeep
+
+touch reference/annotation/.gitkeep
+ 
+touch reference/index/.gitkeep
+
+touch alignment/sam/.gitkeep
+
+touch alignment/bam/.gitkeep
+
+touch alignment/logs/.gitkeep
+
+touch data/raw/.gitkeep
+
+touch data/trimmed/.gitkeep
+
+touch qc/raw_fastqc/.gitkeep
+
+touch qc/trimmed_fastqc/.gitkeep
+
+touch reference/genome/.gitkeep
+
+touch reference/annotation/.gitkeep
+
+touch reference/index/.gitkeep
+
+touch alignment/sam/.gitkeep
+
+touch alignment/bam/.gitkeep
+
+touch alignment/logs/.gitkeep
+
+touch data/raw/.gitkeep
+
+touch data/trimmed/.gitkeep
+
+git pull origin main --no--rebase -m "merge remote chnages"      # make changes on github diretly, resolve the different history
+
+git fetch origin                                                 # get the current history
+
+git merge origin/main --allow-unrelated-histories                # merge with new history
+
+git push origin main                                             # merge to save new changes to github
+
+nano README.md                                                   # how to edit readme from here
+
+git add README.md                                                # add changes to reflect in github
+
+git commit -m "Update README.md"                                 # update changes
+
+git push origin main                                             # sync changes to github
+  199  cat README.md
