@@ -47,3 +47,11 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Genomic data files ( too large for Github)
+*.fastq
+*.fastq.gz
+*.sra
+*.bam
+*.bai
+
