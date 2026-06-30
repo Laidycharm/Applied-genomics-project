@@ -1,0 +1,8 @@
+| SampleID    | Condition          | Replicate | Alignment Rate |
+|-------------|--------------------|-----------|----------------|
+| SRR5364316  | Non-Infected_Day0  | 1         | 100%           |
+| SRR5364317  | Non-Infected_Day0  | 2         | 100%           |
+| SRR5364318  | Influenza_Day4     | 1         | 100%           |
+| SRR5364321  | Influenza_Day4     | 2         | 100%           |
+| SRR5364323  | Influenza_Day8     | 1         | 100%           |
+| SRR5364330  | Influenza_Day8     | 2         | 100%           |

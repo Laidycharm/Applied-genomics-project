@@ -55,3 +55,17 @@ rsconnect/
 *.bam
 *.bai
 
+# # Reference files (too large)
+reference/genome/*.fa
+reference/genome/*.fa.gz
+reference/annotation/*.gtf.gz
+reference/index/*.ht2
+
+# BAM files and zip archives
+alignment/bam/*.zip
+*.zip
+*.Zone.Identifier
+*Zone.Identifier
+
+# Unzipped featureCounts folder
+counts/unzipped_featureCounts/
