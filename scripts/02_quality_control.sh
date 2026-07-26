@@ -2,7 +2,7 @@
 
 #Run Quality Control Using FastQC
 
-SRR_LIST=$(cat ../data/metadata/SRR_accessions.txt)
+SRR_LIST=$(cat ../data/metadata/SRR_accession.txt)
 
 for SRR in $SRR_LIST
 do
