@@ -156,6 +156,45 @@ dev.off()
 cat("Top DEG heatmap saved\n")
 
 
+# Get top 50 DEGs from Flu4 vs Control (most informative comparison)
+top_genes2 <- as.data.frame(res_D4) %>%
+  tibble::rownames_to_column("gene_id") %>%
+  filter(!is.na(padj)) %>%
+  arrange(padj) %>%
+  head(50) %>%
+  pull(gene_id)
+
+# Extract VST values for those genes
+heatmap_mat2 <- vst_mat[top_genes2, ]
+
+# Scale by row (so we see relative expression, not absolute)
+heatmap_mat_scaled2 <- t(scale(t(heatmap_mat2)))
+
+# Create annotation showing condition for each sample
+annotation_col2 <- data.frame(Condition = vsd$Condition)
+rownames(annotation_col2) <- colnames(heatmap_mat2)
+
+# Color scheme
+annotation_colors <- list(
+  Condition = c("Control" = "#2B5C8F",
+                "Flu4" = "#E47F22",
+                "Flu8" = "#CA392B"))
+
+# Plot and save
+png("R/Results/Figures/top_DEG_heatmapII.png",
+    width = 900, height = 1000)
+pheatmap(heatmap_mat_scaled2,
+         annotation_col = annotation_col2,
+         annotation_colors = annotation_colors,
+         show_rownames = TRUE,
+         show_colnames = TRUE,
+         cluster_cols = TRUE,
+         cluster_rows = TRUE,
+         fontsize_row = 7,
+         main = "Top 50 DEGs - Flu4 vs Control")
+dev.off()
+
+cat("Top DEG heatmapII saved\n")
 
 
 png("R/Results/Figures/sample_distance_heatmap.png",
