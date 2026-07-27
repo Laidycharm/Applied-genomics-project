@@ -52,18 +52,12 @@ rownames(annotation) <- rownames(sampleDistMatrix)
 colors <- colorRampPalette(rev(brewer.pal(9, "Blues")))(255)
 
 # Plot and save
-png("R/results/Figures/sample_distance_heatmap.png",
+png("R/Results/Figures/sample_distance_heatmap.png",
     width = 800, height = 700)
 pheatmap(sampleDistMatrix,
-         clustering_distance_rows = sampleDists,
-         clustering_distance_cols = sampleDists,
-         col = colors,
-         annotation_col = annotation,
          main = "Sample Distance Heatmap")
 dev.off()
-
-cat("Sample distance heatmap saved\n")
-
+cat("Done\n")
 
 
 # Volcano plots
@@ -82,6 +76,8 @@ EnhancedVolcano(res_D4,
                 col = c("grey30", "forestgreen", "royalblue", "red2"),
                 legendPosition = "right")
 dev.off()
+cat("Volcano Flu4 done\n")
+
 
 # Flu8 vs Control
 png("R/Results/Figures/volcano_Flu8_vs_Control.png",
@@ -158,3 +154,18 @@ pheatmap(heatmap_mat_scaled,
 dev.off()
 
 cat("Top DEG heatmap saved\n")
+
+
+
+
+png("R/Results/Figures/sample_distance_heatmap.png",
+    width = 800, height = 700)
+pheatmap(sampleDistMatrix,
+         clustering_distance_rows = sampleDists,
+         clustering_distance_cols = sampleDists,
+         col = colors,
+         annotation_col = annotation,
+         main = "Sample Distance Heatmap")
+dev.off()
+cat("Sample distance heatmap done\n")
+
