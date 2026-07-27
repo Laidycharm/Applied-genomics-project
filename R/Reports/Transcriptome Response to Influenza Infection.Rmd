@@ -1,0 +1,189 @@
+---
+title: "Transcriptomic Response to Influenza A Infection in Mouse Cerebellum"
+author: "Princess"
+output: html_document
+---
+
+---
+
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+    highlight: tango
+    fig_width: 10
+    fig_height: 7
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## 1. Introduction
+
+Influenza A virus (IAV) infection triggers a complex transcriptomic response 
+in host tissues. While much research has focused on peripheral immune responses, 
+the effects of influenza infection on the central nervous system (CNS) remain 
+less well understood. This project investigates transcriptomic changes in mouse 
+cerebellum tissue following Influenza A infection at two time points (Day 4 and 
+Day 8 post-infection) compared to non-infected controls.
+
+The dataset used is GSE96870, which contains paired-end RNA-seq data from 
+9 mouse cerebellum samples: 3 non-infected controls (Day 0), 3 infected at 
+Day 4, and 3 infected at Day 8 post-infection.
+
+## 2. Methods
+
+### 2.1 Data Acquisition
+Raw RNA-seq data was downloaded from NCBI SRA using `prefetch` and converted 
+to FASTQ format using `fastq-dump` (SRA Toolkit v3.4.1). The dataset comprises 
+9 paired-end samples (SRR5364316, SRR5364317, SRR5364322, SRR5364318, 
+SRR5364319, SRR5364323, SRR5364321, SRR5364325, SRR5364330).
+
+### 2.2 Quality Control
+Raw reads were assessed using FastQC. All samples showed high quality scores 
+(Phred > 30) across read lengths with minimal adapter contamination, indicating 
+no trimming was necessary.
+
+### 2.3 Alignment
+Reads were aligned to the Mus musculus reference genome (GRCm39, Ensembl 
+release 116) using HISAT2. All samples achieved 100% overall alignment rates,
+confirming high-quality alignments.
+
+### 2.4 Read Counting
+Read counts were generated using featureCounts with the GRCm39 GTF annotation 
+file. Count matrices were merged across all 9 samples for downstream analysis.
+
+### 2.5 Differential Expression Analysis
+Differential expression analysis was performed using DESeq2 in R. Three 
+comparisons were made:
+- Flu4 vs Control (Day 4 infected vs non-infected)
+- Flu8 vs Control (Day 8 infected vs non-infected)
+- Flu8 vs Flu4 (Day 8 vs Day 4 infected)
+
+Genes with |log2FoldChange| > 1 and adjusted p-value < 0.05 were considered 
+significant. LFC shrinkage was applied using the `ashr` method.
+
+### 2.6 Pathway Enrichment Analysis
+GO Biological Process and KEGG pathway enrichment analyses were performed using 
+`clusterProfiler` with the `org.Mm.eg.db` annotation database.
+
+## 3. Results
+
+### 3.1 Principal Component Analysis
+
+```{r pca, echo=FALSE, fig.cap="PCA of VST-transformed counts"}
+knitr::include_graphics("Results/Figures/PCA_plot.png")
+```
+
+The PCA plot shows partial separation between conditions, with some variability 
+between replicates, potentially reflecting biological heterogeneity and sex 
+differences between samples.
+
+### 3.2 Sample Distance Heatmap
+
+```{r sample_dist, echo=FALSE, fig.cap="Sample Distance Heatmap"}
+knitr::include_graphics("Results/Figures/sample_distance_heatmap.png")
+```
+
+### 3.3 Differential Expression Results
+
+A summary of differentially expressed genes (|log2FC| > 1, padj < 0.05) 
+across all three comparisons:
+
+| Comparison | Total DEGs |
+|------------|-----------|
+| Flu4 vs Control | 24 |
+| Flu8 vs Control | 655 |
+| Flu8 vs Flu4 | 212 |
+
+The relatively few DEGs at Day 4 suggests the immune response is still 
+developing, while the dramatic increase at Day 8 reflects a full-scale 
+transcriptomic response to influenza infection.
+
+### 3.4 Volcano Plots
+
+```{r volcano, echo=FALSE, fig.cap="Volcano plots for each comparison"}
+knitr::include_graphics("Results/Figures/volcano_Flu4_vs_Control.png")
+knitr::include_graphics("Results/Figures/volcano_Flu8_vs_Control.png")
+knitr::include_graphics("Results/Figures/volcano_Flu8_vs_Flu4.png")
+```
+
+### 3.5 Top DEG Heatmap
+
+```{r heatmap, echo=FALSE, fig.cap="Top 50 DEGs - Flu8 vs Control"}
+knitr::include_graphics("Results/Figures/top_DEG_heatmap.png")
+```
+
+### 3.6 GO Biological Process Enrichment
+
+Top 5 enriched GO Biological Process terms (Flu8 vs Control):
+
+| GO Term | Description | Adjusted p-value |
+|---------|-------------|-----------------|
+| GO:0035456 | Response to interferon-beta | 9.67e-06 |
+| GO:0034341 | Response to type II interferon | 6.32e-05 |
+| GO:0035458 | Cellular response to interferon-beta | 1.63e-04 |
+| GO:0071346 | Cellular response to type II interferon | 1.40e-03 |
+| GO:0009636 | Response to toxic substance | 4.55e-03 |
+
+```{r go_plot, echo=FALSE, fig.cap="GO Biological Process Enrichment"}
+knitr::include_graphics("Results/Figures/GO_BP_dotplot.png")
+```
+
+### 3.7 KEGG Pathway Enrichment
+
+Top 3 enriched KEGG pathways (Flu8 vs Control):
+
+| Pathway | Description | Adjusted p-value |
+|---------|-------------|-----------------|
+| mmu00565 | Ether lipid metabolism | 2.25e-04 |
+| mmu00592 | Alpha-linolenic acid metabolism | 1.66e-02 |
+| mmu00591 | Linoleic acid metabolism | 2.48e-02 |
+
+```{r kegg_plot, echo=FALSE, fig.cap="KEGG Pathway Enrichment"}
+knitr::include_graphics("Results/Figures/KEGG_dotplot.png")
+```
+
+## 4. Discussion
+
+This analysis reveals a time-dependent transcriptomic response to Influenza A 
+infection in mouse cerebellum. The minimal DEGs at Day 4 (n=24) compared to 
+Day 8 (n=655) suggests the immune response escalates significantly between 
+these time points.
+
+The dominant GO enrichment terms — interferon response pathways — are 
+consistent with known antiviral immunity. Both type I (interferon-beta) and 
+type II (interferon-gamma) interferon response pathways were significantly 
+enriched, highlighting the robust innate immune activation in cerebellar tissue 
+during influenza infection.
+
+The KEGG enrichment of lipid metabolism pathways (ether lipid, linolenic acid, 
+and linoleic acid metabolism) is biologically relevant, as influenza viruses 
+are known to exploit host lipid metabolism for viral envelope assembly and 
+replication. These findings suggest that even in CNS tissue, influenza 
+infection significantly disrupts lipid homeostasis.
+
+The partial clustering in PCA may reflect the mixed sex composition of the 
+dataset (male and female mice), which could contribute to transcriptomic 
+variability independent of infection status.
+
+## 5. References
+
+1. Love MI, Huber W, Anders S (2014). "Moderated estimation of fold change 
+and dispersion for RNA-seq data with DESeq2." Genome Biology, 15, 550.
+
+2. Wu T, et al. (2021). "clusterProfiler 4.0: A universal enrichment tool for 
+interpreting omics data." The Innovation, 2(3), 100141.
+
+3. Stephens M (2016). "False discovery rates: a new deal." Biostatistics, 
+18(2), 275-294.
+
+4. Kim D, Paggi JM, Park C, Bennett C, Salzberg SL (2019). "Graph-based 
+genome alignment and genotyping with HISAT2 and HISAT-genotype." Nature 
+Biotechnology, 37, 907-915.
+
+5. Andrews S (2010). FastQC: A quality control tool for high throughput 
+sequence data. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
