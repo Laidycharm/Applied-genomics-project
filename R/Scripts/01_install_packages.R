@@ -29,3 +29,8 @@ library(clusterProfiler)
 library(org.Mm.eg.db)
 
 
+# Install via Bioconductor
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("EnhancedVolcano")
