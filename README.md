@@ -1,19 +1,5 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Title: "Transcriptomic Response to Influenza A Infection in Mouse Cerebellum"
+
 Author: "Princess Sunday-Jimmy"
 
 ## Introduction
@@ -78,6 +64,7 @@ GO Biological Process and KEGG pathway enrichment analyses were performed using
 ### Principal Component Analysis
 Principal component analysis was used to examine the major sources of
 gene-expression variation across the nine samples.  Principal component analysis showed that PC1 and PC2 explained 40% and 34% of the variance, respectively. The samples did not cluster completely by condition,two Flu8 samples clustered closely, while the third was separated along PC1. Similarly, one control sample and one Flu4 sample were distinct from their respective group replicates.
+![PCA Plot](R/Results/Figures/PCA_plot.png)
 ```{r pca, echo=FALSE, fig.cap="PCA of VST-transformed counts"}
 knitr::include_graphics(
   "C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/PCA_plot.png"
@@ -88,6 +75,7 @@ knitr::include_graphics(
 
 Pairwise sample distances were visualized to further evaluate similarities
 among the expression profiles. The sample-distance heatmap showed that the three Flu8 samples clustered together, indicating relatively similar expression profiles. Two control samples also clustered closely, whereas the third control sample was more similar to some Flu4 samples. The Flu4 group showed greater variability among replicates.
+![Sample Distance Heatmap](R/Results/Figures/sample_distance_heatmap.png)
 ```{r sample_dist, echo=FALSE, fig.cap="Sample Distance Heatmap"}
 knitr::include_graphics(
   "C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/sample_distance_heatmap.png")
@@ -108,7 +96,9 @@ exceeded the fold-change and adjusted p-value thresholds. In contrast, the day-8
 significantly altered genes, with both positive and negative expression
 changes.The day-8 versus day-4 comparison also identified significant expression
 differences.
-
+![volcano_Flu4_vs_Control](R/Results/Figures/volcano_Flu4_vs_Control.png)
+![volcano_Flu8_vs_Control](R/Results/Figures/volcano_Flu8_vs_Control.png)
+![volcano_Flu8_vs_Flu4](R/Results/Figures/volcano_Flu8_vs_Flu4.png)
 ```{r volcano, echo=FALSE, fig.cap="Volcano plots for each comparison"}
 knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu4_vs_Control.png")
 knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu8_vs_Control.png")
