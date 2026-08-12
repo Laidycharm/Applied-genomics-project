@@ -117,7 +117,7 @@ p = 1.63 × 10^-4^), and cellular response to type II interferon
 (GO:0071346; adjusted p = 1.40 × 10^-3^). Response to toxic substance was also enriched (GO:0009636; adjusted
 p = 4.55 × 10^-3^).
 
-![GO_BP_dotplot](R/Results/Figures/GO_BP_dotplot.png")
+![GO_BP_dotplot](R/Results/Figures/GO_BP_dotplot.png)
 
 
 ### KEGG Enrichment Pathway 
@@ -128,7 +128,7 @@ metabolic pathways. Ether lipid metabolism was the most significantly enriched p
 (mmu00592; adjusted p = 1.66 × 10^-2^) and linoleic acid metabolism
 (mmu00591; adjusted p = 2.48 × 10^-2^) were also significantly enriched.
 
-![KEGG_dotplot](R/Results/Figures/KEGG_dotplot.png")
+![KEGG_dotplot](R/Results/Figures/KEGG_dotplot.png)
 
 
 ## Discussion
