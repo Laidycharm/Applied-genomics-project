@@ -1,0 +1,227 @@
+---
+title: "Transcriptomic Response to Influenza A Infection in Mouse Cerebellum"
+author: "Princess"
+output: html_document
+---
+
+---
+
+date: "`r Sys.Date()`"
+output:
+  html_document:
+   ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Introduction
+Influenza A virus (IAV) infection induces extensive molecular and cellular
+responses within the host. Although IAV primarily targets the respiratory
+system, infection can also produce systemic inflammation and neurological
+complications. Nevertheless, the effects of IAV infection on gene expression
+within the central nervous system remain less well characterized than its
+effects in respiratory and peripheral immune tissues.
+
+The cerebellum is traditionally associated with motor coordination but also
+participates in broader neurological and immunological processes. Examining
+transcriptional changes in cerebellar tissue may therefore provide insight into
+how respiratory viral infection influences the brain, even in the absence of
+direct viral replication within neural tissue.
+
+This study analyzed the GSE96870 RNA-sequencing dataset to characterize the
+cerebellar transcriptomic response to IAV infection. Gene-expression profiles
+were compared among uninfected mice and mice collected at 4 and 8 days
+post-infection. The objectives were to evaluate global similarities among
+samples, identify differentially expressed genes, and determine the biological
+processes and pathways associated with the observed transcriptional changes.
+
+## Methods
+
+### Data Acquisition
+Raw RNA-seq data was downloaded from NCBI SRA using `prefetch` and converted 
+to FASTQ format using `fastq-dump` (SRA Toolkit v3.4.1). The dataset comprises 
+9 paired-end samples (SRR5364316, SRR5364317, SRR5364322, SRR5364318, 
+SRR5364319, SRR5364323, SRR5364321, SRR5364325, SRR5364330).
+
+### Quality Control
+Raw reads were assessed using FastQC. All samples showed high quality scores 
+(Phred > 30) across read lengths with minimal adapter contamination, indicating 
+no trimming was necessary.
+
+### Alignment
+Reads were aligned to the Mus musculus reference genome (GRCm39, Ensembl 
+release 116) using HISAT2. All samples achieved 100% overall alignment rates,
+confirming high-quality alignments.
+
+### Read Counting
+Read counts were generated using featureCounts with the GRCm39 GTF annotation 
+file. Count matrices were merged across all 9 samples for downstream analysis.
+
+### Differential Expression Analysis
+Differential expression analysis was performed using DESeq2 in R. Three 
+comparisons were made:
+- Flu4 vs Control (Day 4 infected vs non-infected)
+- Flu8 vs Control (Day 8 infected vs non-infected)
+- Flu8 vs Flu4 (Day 8 vs Day 4 infected)
+
+Genes with |log2FoldChange| > 1 and adjusted p-value < 0.05 were considered 
+significant. LFC shrinkage was applied using the `ashr` method.
+
+### Pathway Enrichment Analysis
+GO Biological Process and KEGG pathway enrichment analyses were performed using 
+`clusterProfiler` with the `org.Mm.eg.db` annotation database.
+
+## Results
+
+### Principal Component Analysis
+Principal component analysis was used to examine the major sources of
+gene-expression variation across the nine samples.  Principal component analysis showed that PC1 and PC2 explained 40% and 34% of the variance, respectively. The samples did not cluster completely by condition,two Flu8 samples clustered closely, while the third was separated along PC1. Similarly, one control sample and one Flu4 sample were distinct from their respective group replicates.
+```{r pca, echo=FALSE, fig.cap="PCA of VST-transformed counts"}
+knitr::include_graphics(
+  "C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/PCA_plot.png"
+)
+```
+
+### Sample Distance Heatmap
+
+Pairwise sample distances were visualized to further evaluate similarities
+among the expression profiles. The sample-distance heatmap showed that the three Flu8 samples clustered together, indicating relatively similar expression profiles. Two control samples also clustered closely, whereas the third control sample was more similar to some Flu4 samples. The Flu4 group showed greater variability among replicates.
+```{r sample_dist, echo=FALSE, fig.cap="Sample Distance Heatmap"}
+knitr::include_graphics(
+  "C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/sample_distance_heatmap.png")
+```
+
+### Differential Expression Results
+
+The differential gene expression varied substantially across the three comparisons relative to control. At day 4 post-infection,14 genes were significantly including 10 upregulated and 4 downregulated genes. By day 8, the number of differentially expressed genes increased to 254 genes, comprising
+147 upregulated and 107 downregulated genes.
+
+The direct comparison between day 8 and day 4 identified 80 genes differentially expressed genes, including 53 upregulated and 27 downregulated genes.
+
+###  Volcano Plots
+
+Volcano plots were used to visualize the relationship between gene-expression
+effect size and statistical significance for each comparison. The day-4 comparison contained relatively few genes that simultaneously
+exceeded the fold-change and adjusted p-value thresholds. In contrast, the day-8 comparison showed a substantially larger set of
+significantly altered genes, with both positive and negative expression
+changes.The day-8 versus day-4 comparison also identified significant expression
+differences.
+
+```{r volcano, echo=FALSE, fig.cap="Volcano plots for each comparison"}
+knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu4_vs_Control.png")
+knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu8_vs_Control.png")
+knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu8_vs_Flu4.png")
+```
+
+### Top DEG Heatmap
+The top 50 genes from the Flu4-versus-control comparison showed distinct expression differences between the groups. Control samples clustered together, while Flu4 samples displayed both increased and decreased expression across separate gene clusters. Flu8 samples showed more variable and generally intermediate expression patterns
+
+```{r heatmap, echo=FALSE, fig.cap="Top 50 DEGs - Flu8 vs Control"}
+knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/top_DEG_heatmap.png")
+knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/top_DEG_heatmapII.png")
+```
+
+### Gene Ontology Biological Process Enrichment
+
+Gene Ontology Biological Process enrichment analysis identified several
+interferon-associated processes among the differentially expressed genes.
+
+The most significantly enriched term was response to interferon-beta
+(GO:0035456; adjusted p = 9.67 × 10^-6^). Other significantly enriched terms
+included response to type II interferon (GO:0034341; adjusted p =
+6.32 × 10^-5^), cellular response to interferon-beta (GO:0035458; adjusted
+p = 1.63 × 10^-4^), and cellular response to type II interferon
+(GO:0071346; adjusted p = 1.40 × 10^-3^). Response to toxic substance was also enriched (GO:0009636; adjusted
+p = 4.55 × 10^-3^).
+
+```{r go_plot, echo=FALSE, fig.cap="GO Biological Process Enrichment"}
+knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/GO_BP_dotplot.png")
+```
+
+### KEGG Enrichment Pathway 
+
+KEGG pathway analysis identified a smaller set of significantly enriched
+metabolic pathways. Ether lipid metabolism was the most significantly enriched pathway
+(mmu00565; adjusted p = 2.25 × 10^-4^). Alpha-linolenic acid metabolism
+(mmu00592; adjusted p = 1.66 × 10^-2^) and linoleic acid metabolism
+(mmu00591; adjusted p = 2.48 × 10^-2^) were also significantly enriched.
+
+```{r kegg_plot, echo=FALSE, fig.cap="KEGG Pathway Enrichment"}
+knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/KEGG_dotplot.png")
+```
+
+## Discussion
+
+This analysis showed that the transcriptomic response to influenza A infection in the mouse cerebellum became more pronounced over time. Differential expression was limited at Day 4 but increased substantially by Day 8, indicating that the effect of infection intensified as it progressed. The Flu8-versus-Flu4 comparison supported this pattern by showing that gene expression continued to change between the two post-infection time points. Although the PCA and sample-distance heatmap showed some variability among biological replicates, the Flu8 samples generally had the most distinct expression profiles, which is consistent with a stronger later response.
+
+The enrichment results provided further insight into the biological processes underlying these changes. The dominant GO terms were related to interferon signaling, a major component of antiviral immunity. Enrichment of interferon-beta responses reflected type I interferon activity, while enrichment of type II interferon-related pathways suggested the involvement of additional immune-regulatory responses. Together, these findings indicate that antiviral defense pathways became a major part of the cerebellar response as the infection progressed.
+
+KEGG analysis also identified enrichment of ether lipid, alpha-linolenic acid, and linoleic acid metabolism. These pathways are relevant because host lipids are involved in membrane organization, inflammatory signaling, viral-envelope formation, and influenza virus replication. The results therefore suggest that the response in cerebellar tissue was not limited to immune signaling but also involved changes in lipid-related transcriptional processes. Overall, the findings show that the effect of influenza A infection on cerebellar gene expression increased with time and was characterized by both antiviral interferon responses and changes in lipid-associated pathways.
+
+
+## References
+
+1. Love MI, Huber W, Anders S (2014). "Moderated estimation of fold change 
+and dispersion for RNA-seq data with DESeq2." Genome Biology, 15, 550.
+
+2. Wu T, et al. (2021). "clusterProfiler 4.0: A universal enrichment tool for 
+interpreting omics data." The Innovation, 2(3), 100141.
+
+3. Stephens M (2016). "False discovery rates: a new deal." Biostatistics, 
+18(2), 275-294.
+
+4. Kim D, Paggi JM, Park C, Bennett C, Salzberg SL (2019). "Graph-based 
+genome alignment and genotyping with HISAT2 and HISAT-genotype." Nature 
+Biotechnology, 37, 907-915.
+
+5. Andrews S (2010). FastQC: A quality control tool for high throughput 
+sequence data. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
+
+## Supplementary Tables
+Table S1: Significant DEGs, Flu4 vs Control
+```{r Flu4_tsv, echo=FALSE, table.cap="Differential Expressed Genes Betwwen Flu4 and Control"}
+flu4_table<- read.delim("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Tables/Flu4_vs_Control_sig_DEGs.tsv",
+                        check.names = FALSE)
+DT::datatable(
+  flu4_table,
+  rownames = FALSE,
+  filter = "top",
+  options = list(
+    pageLength = 10,
+    scrollX = TRUE
+  )
+)
+```
+
+Table S2: Significant DEGs, Flu8 vs Control
+```{r Flu8_tsv, echo=FALSE, table.cap="Differential Expressed Genes Betwwen Flu8 and Control"}
+flu8_table<- read.delim("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Tables/Flu8_vs_Control_sig_DEGs.tsv",
+                        check.names = FALSE)
+DT::datatable(
+  flu8_table,
+  rownames = FALSE,
+  filter = "top",
+  options = list(
+    pageLength = 10,
+    scrollX = TRUE
+  )
+)
+```
+
+Table S3: Significant DEGs, Flu8 vs Flu4
+```{r Flu8vFlu4_tsv, echo=FALSE, table.cap="Differential Expressed Genes Betwwen Flu8 and Flu4"}
+flu8vs4_table<- read.delim("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Tables/Flu8_vs_Flu4_sig_DEGs.tsv",
+                           check.names = FALSE)
+DT::datatable(
+  flu8vs4_table,
+  rownames = FALSE,
+  filter = "top",
+  options = list(
+    pageLength = 10,
+    scrollX = TRUE
+  )
+)
+```
+
