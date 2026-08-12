@@ -64,22 +64,15 @@ GO Biological Process and KEGG pathway enrichment analyses were performed using
 ### Principal Component Analysis
 Principal component analysis was used to examine the major sources of
 gene-expression variation across the nine samples.  Principal component analysis showed that PC1 and PC2 explained 40% and 34% of the variance, respectively. The samples did not cluster completely by condition,two Flu8 samples clustered closely, while the third was separated along PC1. Similarly, one control sample and one Flu4 sample were distinct from their respective group replicates.
+
 ![PCA Plot](R/Results/Figures/PCA_plot.png)
-```{r pca, echo=FALSE, fig.cap="PCA of VST-transformed counts"}
-knitr::include_graphics(
-  "C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/PCA_plot.png"
-)
-```
 
 ### Sample Distance Heatmap
 
 Pairwise sample distances were visualized to further evaluate similarities
 among the expression profiles. The sample-distance heatmap showed that the three Flu8 samples clustered together, indicating relatively similar expression profiles. Two control samples also clustered closely, whereas the third control sample was more similar to some Flu4 samples. The Flu4 group showed greater variability among replicates.
+
 ![Sample Distance Heatmap](R/Results/Figures/sample_distance_heatmap.png)
-```{r sample_dist, echo=FALSE, fig.cap="Sample Distance Heatmap"}
-knitr::include_graphics(
-  "C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/sample_distance_heatmap.png")
-```
 
 ### Differential Expression Results
 
@@ -96,22 +89,20 @@ exceeded the fold-change and adjusted p-value thresholds. In contrast, the day-8
 significantly altered genes, with both positive and negative expression
 changes.The day-8 versus day-4 comparison also identified significant expression
 differences.
+
 ![volcano_Flu4_vs_Control](R/Results/Figures/volcano_Flu4_vs_Control.png)
+
 ![volcano_Flu8_vs_Control](R/Results/Figures/volcano_Flu8_vs_Control.png)
+
 ![volcano_Flu8_vs_Flu4](R/Results/Figures/volcano_Flu8_vs_Flu4.png)
-```{r volcano, echo=FALSE, fig.cap="Volcano plots for each comparison"}
-knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu4_vs_Control.png")
-knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu8_vs_Control.png")
-knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/volcano_Flu8_vs_Flu4.png")
-```
 
 ### Top DEG Heatmap
+
 The top 50 genes from the Flu4-versus-control comparison showed distinct expression differences between the groups. Control samples clustered together, while Flu4 samples displayed both increased and decreased expression across separate gene clusters. Flu8 samples showed more variable and generally intermediate expression patterns
 
-```{r heatmap, echo=FALSE, fig.cap="Top 50 DEGs - Flu8 vs Control"}
-knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/top_DEG_heatmap.png")
-knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/top_DEG_heatmapII.png")
-```
+![top_DEG_heatmap](R/Results/Figures/top_DEG_heatmap.png)
+
+![top_DEG_heatmapII](R/Results/Figures/top_DEG_heatmapII.png)
 
 ### Gene Ontology Biological Process Enrichment
 
@@ -126,9 +117,8 @@ p = 1.63 × 10^-4^), and cellular response to type II interferon
 (GO:0071346; adjusted p = 1.40 × 10^-3^). Response to toxic substance was also enriched (GO:0009636; adjusted
 p = 4.55 × 10^-3^).
 
-```{r go_plot, echo=FALSE, fig.cap="GO Biological Process Enrichment"}
-knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/GO_BP_dotplot.png")
-```
+![GO_BP_dotplot](R/Results/Figures/GO_BP_dotplot.png")
+
 
 ### KEGG Enrichment Pathway 
 
@@ -138,9 +128,8 @@ metabolic pathways. Ether lipid metabolism was the most significantly enriched p
 (mmu00592; adjusted p = 1.66 × 10^-2^) and linoleic acid metabolism
 (mmu00591; adjusted p = 2.48 × 10^-2^) were also significantly enriched.
 
-```{r kegg_plot, echo=FALSE, fig.cap="KEGG Pathway Enrichment"}
-knitr::include_graphics("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Figures/KEGG_dotplot.png")
-```
+![KEGG_dotplot](R/Results/Figures/KEGG_dotplot.png")
+
 
 ## Discussion
 
@@ -171,6 +160,10 @@ sequence data. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 
 ## Supplementary Tables
+See the [full report](https://laidycharm.github.io/Applied-genomics-project/R/Reports/Transcriptome-Response-to-Influenza-Infection.html) for the complete, interactive results table.
+
+
+
 Table S1: Significant DEGs, Flu4 vs Control
 ```{r Flu4_tsv, echo=FALSE, table.cap="Differential Expressed Genes Betwwen Flu4 and Control"}
 flu4_table<- read.delim("C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Results/Tables/Flu4_vs_Control_sig_DEGs.tsv",
