@@ -158,7 +158,7 @@ sequence data. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 
 ## Supplementary Tables
-See the [full report](https://github.com/Laidycharm/Applied-genomics-project/blob/main/R/Reports/Transcriptome-Response-to-Influenza-Infection.html) for the complete, interactive results table.
+See the [full report](https://laidycharm.github.io/Applied-genomics-project/R/Reports/Transcriptome-Response-to-Influenza-Infection.html) for the complete, interactive results table.
 
 
 
