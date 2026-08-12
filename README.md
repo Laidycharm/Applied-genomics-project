@@ -1,8 +1,14 @@
-
+Abstract
 This project uses RNA-seq data from the GSE96870 dataset (NCBI SRA) with SRR_accesssion I.D of :SRR5364316, SRR5364317, SRR5364318,SRR5364319, SRR5364321, SRR5364322,SRR5364323,SRR5364325,SRR5364330. Nine paired reads samples derived from mouse (Mus musculus) cerebellum tissue. The dataset 
 includes paired-end Illumina sequencing reads comparing female and male non-infected control mice to mice infected with Influenza A across two time points (Day 4 and Day 8 
 post-infection). Samples are organized into three conditions with two biological replicates each: Non-Infected (Day 0), Influenza-infected (Day 4), 
 and Influenza-infected (Day 8).
+
+Read full report here: file:///C:/Users/bjimm/Downloads/Genomics/Applied-genomics-project/R/Reports/Transcriptome-Response-to-Influenza-Infection.html
+
+
+
+
 
 ## FASTQC QUALITY ASSESSMENT
 
