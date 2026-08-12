@@ -119,7 +119,6 @@ p = 4.55 × 10^-3^).
 
 ![GO_BP_dotplot](R/Results/Figures/GO_BP_dotplot.png)
 
-
 ### KEGG Enrichment Pathway 
 
 KEGG pathway analysis identified a smaller set of significantly enriched
@@ -129,7 +128,6 @@ metabolic pathways. Ether lipid metabolism was the most significantly enriched p
 (mmu00591; adjusted p = 2.48 × 10^-2^) were also significantly enriched.
 
 ![KEGG_dotplot](R/Results/Figures/KEGG_dotplot.png)
-
 
 ## Discussion
 
@@ -160,7 +158,7 @@ sequence data. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 
 ## Supplementary Tables
-See the [full report](https://laidycharm.github.io/Applied-genomics-project/R/Reports/Transcriptome-Response-to-Influenza-Infection.html) for the complete, interactive results table.
+See the [full report](https://github.com/Laidycharm/Applied-genomics-project/blob/main/R/Reports/Transcriptome-Response-to-Influenza-Infection.html) for the complete, interactive results table.
 
 
 
